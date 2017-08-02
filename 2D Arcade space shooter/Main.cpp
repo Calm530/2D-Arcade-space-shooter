@@ -85,11 +85,9 @@ int main()
 			{
 
 			Bullet newBullet(sf::Vector2f(8, 50));
-			newBullet.setPos(sf::Vector2f((player.getPos().x), player.getPos().y));
+			newBullet.setPos(sf::Vector2f(player.getPos().x + (player.getRight() - (newBullet.getRight() / 2)), player.getPos().y));
 			bulletVec.push_back(newBullet);
-			
-
-
+		
 			clock.restart();
 			}
 			

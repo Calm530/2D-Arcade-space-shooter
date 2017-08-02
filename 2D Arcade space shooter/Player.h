@@ -42,6 +42,11 @@ public:
 
 	sf::FloatRect boundingBox = player.getGlobalBounds();
 
+	int getRight() {
+		return player.getTexture()->getSize().x * (0.5f * player.getScale().x);
+	}
+
+
 private:
 
 
@@ -79,7 +84,7 @@ Player::Player(sf::Texture& TEMP_Texture, sf::Vector2f posi, sf::Vector2f size, 
 	player.setTexture(TEMP_Texture);
 	//player.setPosition(posi);
 
-	player.setOrigin(sf::Vector2f(player.getTexture()->getSize().x * 0.5, player.getTexture()->getSize().y * 0.5));
+	//player.setOrigin(sf::Vector2f(player.getTexture()->getSize().x * 0.5, player.getTexture()->getSize().y * 0.5));
 
 	player.setScale(2.7f, 2.7f);
 	 
