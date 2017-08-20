@@ -6,25 +6,32 @@ class Bullet
 {
 public:
 	Bullet();
-	Bullet(sf::Vector2f);
+	Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos);
 	~Bullet();
 
 	void fire(int);
 
 	int getRight() {
-		return bullet.getPosition().x + bullet.getSize().x;
+		return bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x);
 	}
 	int getLeft() {
-		return bullet.getPosition().x;
+		return bullet.getTexture()->getSize().x;
 	}
 	int getTop() {
-		return bullet.getPosition().y;
+		return bullet.getTexture()->getSize().y;
 	}
 	int getBottom() {
-		return bullet.getPosition().y + bullet.getSize().y;
+		return bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y);
+	}
+
+	int getCenterX() {
+		return (bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x)) / 2;
 	}
 
 	sf::FloatRect size() { return bullet.getGlobalBounds(); }
+
+
+
 
 	void setPos(sf::Vector2f);
 	
@@ -40,9 +47,13 @@ public:
 
 private:
 
+	int rSourceY;
+	int rSourceX;
+	int rSourceWidht;
+	int rSourceHeight;
 
-
-	sf::RectangleShape bullet;
+	sf::Sprite bullet;
+	sf::Sprite getSprite() const;
 
 };
 
@@ -50,11 +61,20 @@ Bullet::Bullet()
 {
 
 }
-Bullet::Bullet(sf::Vector2f size)
+Bullet::Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos)
 {
-	bullet.setOrigin(bullet.getGlobalBounds().width / 2, bullet.getGlobalBounds().height / 2);
-	bullet.setSize(size);
 
+
+	bullet.setTexture(TEMP_Texture);
+	bullet.setOrigin(bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x), bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y));
+	bullet.setScale(4.0f, 4.0f);
+
+	rSourceY = sourcepos.y;
+	rSourceX = sourcepos.x;
+	rSourceWidht = size.x;
+	rSourceHeight = size.y;
+
+	//bullet.setTextureRect(sf::IntRect(rSourceX, rSourceY, rSourceWidht, rSourceHeight));
 }
 Bullet::~Bullet()
 {
@@ -66,6 +86,11 @@ void Bullet::fire(int speed)
 
 	bullet.move(0, -speed);
 
+}
+
+sf::Sprite Bullet::getSprite() const
+{
+	return bullet;
 }
 
 void Bullet::setPos(sf::Vector2f newPos)

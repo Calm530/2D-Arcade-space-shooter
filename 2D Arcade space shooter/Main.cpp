@@ -13,14 +13,23 @@ int main()
 	if (!playertexture.loadFromFile("Art/Images_06.png"))
 		EXIT_FAILURE;
 
+	sf::Texture bulletTexture;
+	if (!bulletTexture.loadFromFile("Art/Images_08.png"))
+		EXIT_FAILURE;
+
 	sf::RenderWindow window(sf::VideoMode(400, 600), "D3RP", sf::Style::Close);
 	
 	window.setFramerateLimit(60);
-
+	sf::Event event;
 	
+/*	sf::View gameView;
+	gameView.setSize(400, 600);
+	gameView.setCenter(0, 0);
+*/	
 
 
 	Player player(playertexture, sf::Vector2f(100, 400), sf::Vector2f(20, 26), sf::Vector2i(0, 0));
+	
 	std::vector<Bullet> bulletVec;
 	std::vector<Enemy> enemyVec;
 
@@ -46,28 +55,43 @@ int main()
 	while (window.isOpen())
 	{
 
-		
+		while (window.pollEvent(event))
+		{
+			// check the type of the event...
+			switch (event.type)
+			{
+				// window closed
+			case sf::Event::Closed:
+				window.close();
+				break;
+			default:
+				break;
+			}
+		}
 		sf::Vector2f playerOrigin = player.origin();
 
 		
-		
-
-		sf::Event event;
-		while (window.pollEvent(event))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-
-		
+		//	gameView.move(-400, 0);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+		//	gameView.move(400, 0);
+		}
+		
+		
+			
+		
+		
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 		{
 			std::cout << player.getPos().x + playerOrigin.x;
 		}
 
 		player.Movement(window,event);
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			isFiring = true;
 		}
@@ -81,10 +105,10 @@ int main()
 
 		if (isFiring == true)
 		{
-			if (clock.getElapsedTime().asSeconds() >= 0.18f)
+			if (clock.getElapsedTime().asSeconds() >= 0.15f)
 			{
 
-			Bullet newBullet(sf::Vector2f(8, 50));
+			Bullet newBullet(bulletTexture, sf::Vector2f(5,10),sf::Vector2i(0,0));
 			newBullet.setPos(sf::Vector2f(player.getPos().x + (player.getRight() - (newBullet.getRight() / 2)), player.getPos().y));
 			bulletVec.push_back(newBullet);
 		
@@ -96,21 +120,17 @@ int main()
 
 
 
-			for (int i = 0; i < bulletVec.size(); i++) {
+		for (auto& bulletObj : bulletVec) {
 
-				bulletVec[i].draw(window);
-				bulletVec[i].fire(playerSpd + 20);
+			bulletObj.draw(window);
+			bulletObj.fire(playerSpd + 10);
 
 			}
 
 
+			
 
-			for (int i = 0; i < enemyVec.size(); i++) {
 
-
-				enemyVec[i].draw(window);
-				enemyVec[i].move(5);
-			}
 
 
 			//std::cout << bulletVec.size() << std::endl;
