@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Asteroid.h" />
     <ClInclude Include="GUI\button.hpp" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

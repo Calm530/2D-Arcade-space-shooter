@@ -159,19 +159,19 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	velocityX = directionX * speed;
 	velocityY = directionY * speed;
 */
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		player.move(0, -moveSpd);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		player.move(0, moveSpd);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		player.move(-moveSpd, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		player.move(moveSpd, 0);
 	}

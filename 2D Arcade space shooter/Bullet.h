@@ -28,7 +28,7 @@ public:
 		return (bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x)) / 2;
 	}
 
-	sf::FloatRect size() { return bullet.getGlobalBounds(); }
+	sf::FloatRect boundingBox() { return bullet.getGlobalBounds(); }
 
 
 
@@ -66,7 +66,7 @@ Bullet::Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i source
 
 
 	bullet.setTexture(TEMP_Texture);
-	bullet.setOrigin(bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x), bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y));
+	//bullet.setOrigin(bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x), bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y));
 	bullet.setScale(4.0f, 4.0f);
 
 	rSourceY = sourcepos.y;
