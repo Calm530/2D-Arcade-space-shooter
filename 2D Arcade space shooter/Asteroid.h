@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include <iostream>
 
-class Asteroid
+class Asteroid : public sf::Transformable
 {
 public:
 	Asteroid();
@@ -35,8 +35,10 @@ public:
 	void movement(int);
 
 	float hitpoints;
-
 	void setHP(float);
+	void update();
+		
+	bool dead = false;
 
 	void setPos(sf::Vector2f);
 
@@ -44,13 +46,14 @@ public:
 	sf::Vector2f getPos() {
 		return asteroid.getPosition();
 	}
+	float getPosY() {
+		return asteroid.getPosition().y;
+	}
 
 	void draw(sf::RenderWindow& window)
 	{
 		window.draw(asteroid);
 	}
-
-private:
 
 	int rSourceY;
 	int rSourceX;
@@ -72,7 +75,8 @@ Asteroid::Asteroid(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i so
 
 	asteroid.setTexture(TEMP_Texture);
 	asteroid.setOrigin(asteroid.getTexture()->getSize().x * (0.5f * asteroid.getScale().x), asteroid.getTexture()->getSize().y * (0.5f * asteroid.getScale().y));
-	asteroid.setScale(2.0f, 2.0f);
+	asteroid.setScale(2.3f, 2.3f);
+	hitpoints = 1;
 
 	rSourceY = sourcepos.y;
 	rSourceX = sourcepos.x;
@@ -87,8 +91,9 @@ Asteroid::~Asteroid()
 }
 void Asteroid::movement(int speed)
 {
-
 	asteroid.move(0, -speed);
+
+	
 
 }
 
@@ -102,8 +107,17 @@ void Asteroid::setHP(float hp)
 	hitpoints = hp;
 }
 
+void Asteroid::update()
+{
+	if (hitpoints <= 0)
+	{
+		dead = true;
+	}
+}
+
 void Asteroid::setPos(sf::Vector2f newPos)
 {
 	asteroid.setPosition(newPos);
 }
+
 

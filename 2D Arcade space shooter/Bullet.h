@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class Bullet
+class Bullet : public sf::Transformable
 {
 public:
 	Bullet();
@@ -30,7 +30,7 @@ public:
 
 	sf::FloatRect boundingBox() { return bullet.getGlobalBounds(); }
 
-
+	bool dead = false;
 
 
 	void setPos(sf::Vector2f);

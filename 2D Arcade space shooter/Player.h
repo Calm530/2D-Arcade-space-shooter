@@ -27,8 +27,9 @@ public:
 
 	void Movement(sf::RenderWindow&, sf::Event);
 	float moveSpd = 6;
-	float angle;
 
+	int Health = 4;
+	
 	void setHealth(int hitpoints)
 	{
 		Health = hitpoints;
@@ -40,7 +41,7 @@ public:
 
 	sf::Vector2f origin();
 
-	sf::FloatRect boundingBox = player.getGlobalBounds();
+	sf::FloatRect boundingBox() { return player.getGlobalBounds(); }
 
 	int getRight() {
 		return player.getTexture()->getSize().x * (0.5f * player.getScale().x);
@@ -58,8 +59,9 @@ private:
 	int rAddY;
 
 	
-	int Health;
 
+
+	
 
 	virtual void draw(sf::RenderTarget& window, sf::RenderStates state)const
 	{
@@ -87,7 +89,8 @@ Player::Player(sf::Texture& TEMP_Texture, sf::Vector2f posi, sf::Vector2f size, 
 	//player.setOrigin(sf::Vector2f(player.getTexture()->getSize().x * 0.5, player.getTexture()->getSize().y * 0.5));
 
 	player.setScale(2.7f, 2.7f);
-	 
+
+	
 	
 
 	rSourceY = sourcepos.y;
@@ -125,7 +128,10 @@ sf::Vector2f Player::origin()
 void Player::Movement(sf::RenderWindow& window, sf::Event event)
 {
 	
-
+	if (Health <= 0)
+	{
+		Health = 0;
+	}
 	float positionX;
 	float positionY;
 
@@ -155,7 +161,7 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	angleY = mousePos.y - (positionY + (player.getGlobalBounds().height)/ (player.getScale().y *2));
 	distance = sqrt((angleX * angleX) + (angleY * angleY));
 	directionX = angleX / distance;
-	directionY = angleY / distance;
+	directionY = angleY / distance; wa wdswasdwasdwasdwawa  ds d d      d
 	velocityX = directionX * speed;
 	velocityY = directionY * speed;
 */
@@ -174,11 +180,14 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		player.move(moveSpd, 0);
+		
 	}
-
 	
 		//if(player.getPosition()!=window.mapPixelToCoords(sf::Mouse::getPosition(window)))
 		//player.move(velocityX, velocityY);
+	//player.move(std::cos(velocityX), std::sin(velocityY));
+
+	
 	
 	if (player.getPosition().x <= 0)
 	{
