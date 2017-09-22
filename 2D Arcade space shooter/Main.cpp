@@ -73,6 +73,15 @@ int main()
 	sf::Text DHPT(hitpointText,font1,20);
 	sf::Text scoreText("", font1, 20);
 	sf::Text HitpointScore("", font1, 20);
+	sf::Text GameOverText("Game Over", font1, 45);
+	sf::Text RespawnAvailable("Press 'Space' to Restart", font1, 20);
+	sf::Text MainMenuText1("Asteroid Shooter", font1, 35);
+	sf::Text MainMenuText2("Press 'Space' to Start", font1, 20);
+
+	GameOverText.setPosition(45, 255);
+	RespawnAvailable.setPosition(35, 320);
+	MainMenuText1.setPosition(20, 235);
+	MainMenuText2.setPosition(45, 280);
 
 	scoreText.setPosition(sf::Vector2f(0,20));
 	HitpointScore.setPosition(sf::Vector2f(130, 0));
@@ -88,6 +97,8 @@ int main()
 	sf::Clock clock3;
 	sf::Clock clock4;
 	sf::Clock clock5;
+	sf::Clock clock6;
+	sf::Clock clock7;
 
 	sf::Time timeElapsed = clock.getElapsedTime();
 	sf::Time timeElapsed2 = clock.getElapsedTime();
@@ -97,8 +108,10 @@ int main()
 	float playerSpd = player.moveSpd;
 	
 	bool isFiring = false;
-	bool isPlaying = true;
+	bool isPlaying = false;
 	bool isDead = false;
+	bool respawn = false;
+	bool isPaused = false;
 
 	sf::Vector2f pos = player.getPos();
 	int posx = rand() % 400 + 0;
@@ -107,6 +120,9 @@ int main()
 	Asteroid newAsteroid(asteroidTexture, sf::Vector2f(32, 32), sf::Vector2i(0, 0));
 
 	newAsteroid.setHP(4);
+
+
+	
 
 	while (window.isOpen())
 	{
@@ -125,134 +141,162 @@ int main()
 			}
 		}
 
-
-
-
-
-
-
-
-		std::stringstream ss;
-		std::stringstream PHS;
-
-		sf::Vector2f playerOrigin = player.origin();
-
-
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && isPlaying == false)
 		{
-
-			std::cout << asteroidVec.size();
-
+			isPlaying = true;
 		}
-
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			isFiring = true;
-		}
-		else
-		{
-			isFiring = false;
-		}
-
-
-
-		if (isFiring == true)
-		{
-			if (clock.getElapsedTime().asSeconds() >= 0.15f)
-			{
-				if (isDead == false) {
-					newBullet.setPos(sf::Vector2f(player.getPos().x + (player.getRight() - (newBullet.getCenterX())), player.getPos().y));
-					bulletVec.push_back(newBullet);
-				}
-
-
-				clock.restart();
-			}
-
-		}
-
-
-
-		if (clock2.getElapsedTime().asSeconds() >= 1.3f)
-		{
-			int spawnRange = rand() % 380 + 20;
-			newAsteroid.setPos(sf::Vector2f(spawnRange, -20));
-			newAsteroid.setHP(3);
-			asteroidVec.push_back(newAsteroid);
-
-
-
-
-			clock2.restart();
-		}
-		if (clock4.getElapsedTime().asSeconds() >= 0.7f)
-		{
-			int spawnRange = rand() % 380 + 20;
-			newAsteroid.setPos(sf::Vector2f(spawnRange, -20));
-			newAsteroid.setHP(3);
-			asteroidVec.push_back(newAsteroid);
-
-
-
-
-			clock4.restart();
-		}
-
 
 
 		window.clear();
 
-		sf::FloatRect bulletBox;
-		sf::FloatRect AsteroidBox;
-		sf::FloatRect playerBox;
-
-
-		playerBox = player.boundingBox();
-
-
-
-		for (auto& bulletObj : bulletVec)
+		if (isPlaying == true)
 		{
 
-			bulletObj.draw(window);
-			bulletObj.fire(playerSpd + 10);
-			bulletBox = bulletObj.boundingBox();
 
-			if (bulletBox.intersects(AsteroidBox))
+
+			std::stringstream ss;
+			std::stringstream PHS;
+
+			sf::Vector2f playerOrigin = player.origin();
+
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 			{
-				bulletObj.dead = true;
+
+				std::cout << asteroidVec.size();
+
 			}
 
-		}
 
-
-
-
-		for (auto& asteroidObj : asteroidVec)
-		{
-
-			asteroidObj.draw(window);
-			asteroidObj.movement(-7);
-			asteroidObj.update();
-			AsteroidBox = asteroidObj.boundingBox();
-
-
-			if (AsteroidBox.intersects(bulletBox))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				asteroidObj.dead = true;
-				score = score + 100;
+				isFiring = true;
+			}
+			else
+			{
+				isFiring = false;
 			}
 
-			if (AsteroidBox.intersects(playerBox))
-			{
 
-				player.setHealth(player.Health - 1);
-				if (isDead == false) {
-					score = score + 50;
-					asteroidObj.dead = true;
+			if (clock6.getElapsedTime().asSeconds() >= 2.5f && isDead == true) {
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				{
+
+					respawn = true;
+					clock6.restart();
 				}
+			}
+
+			if (isFiring == true && clock7.getElapsedTime().asSeconds() >= 0.5)
+			{
+				if (clock.getElapsedTime().asSeconds() >= 0.15f)
+				{
+					if (isDead == false) {
+						newBullet.setPos(sf::Vector2f(player.getPos().x + (player.getRight() - (newBullet.getCenterX())), player.getPos().y));
+						bulletVec.push_back(newBullet);
+					}
+
+
+					clock.restart();
+				}
+
+			}
+
+
+
+			if (clock2.getElapsedTime().asSeconds() >= 1.3f)
+			{
+				if (isPlaying == true) {
+					int spawnRange = rand() % 380 + 20;
+					newAsteroid.setPos(sf::Vector2f(spawnRange, -20));
+					newAsteroid.setHP(3);
+					asteroidVec.push_back(newAsteroid);
+				}
+
+
+
+				clock2.restart();
+			}
+			if (clock4.getElapsedTime().asSeconds() >= 0.7f)
+			{
+				if (isPlaying == true) {
+					int spawnRange = rand() % 380 + 20;
+
+					newAsteroid.setPos(sf::Vector2f(spawnRange, -20));
+					newAsteroid.setHP(3);
+					asteroidVec.push_back(newAsteroid);
+				}
+				
+
+
+
+
+				clock4.restart();
+			}
+
+
+
+			
+
+			sf::FloatRect bulletBox;
+			sf::FloatRect AsteroidBox;
+			sf::FloatRect playerBox;
+
+
+			playerBox = player.boundingBox();
+
+
+
+			for (auto& bulletObj : bulletVec)
+			{
+
+				bulletObj.draw(window);
+				bulletObj.fire(playerSpd + 10);
+				bulletObj.update();
+				bulletBox = bulletObj.boundingBox();
+
+				if (bulletBox.intersects(AsteroidBox))
+				{
+					bulletObj.dead = true;
+				}
+				if (bulletObj.getPos().y >= 610)
+				{
+					bulletObj.dead = true;
+				}
+
+			}
+
+
+
+
+			for (auto& asteroidObj : asteroidVec)
+			{
+
+				asteroidObj.draw(window);
+				asteroidObj.movement(-7);
+				asteroidObj.update();
+				AsteroidBox = asteroidObj.boundingBox();
+
+
+				if (AsteroidBox.intersects(bulletBox))
+				{
+					asteroidObj.dead = true;
+					score = score + 100;
+				}
+
+				if (AsteroidBox.intersects(playerBox))
+				{
+
+					player.setHealth(player.Health - 1);
+					if (isDead == false) {
+						
+						asteroidObj.dead = true;
+					}
+
+				}
+
 				if (asteroidObj.getPosY() >= 610)
 				{
 					if (isDead == false) {
@@ -260,10 +304,12 @@ int main()
 					}
 					asteroidObj.dead = true;
 				}
+				if (asteroidObj.getPosY() >= -30 && respawn == true)
+				{
 
-
+					asteroidObj.dead = true;
+				}
 			}
-		}
 
 			HPscore = player.Health;
 
@@ -274,26 +320,30 @@ int main()
 			if (isDead == false)
 			{
 				HitpointScore.setString(PHS.str());
+
 			}
-			
+
+
+
 
 			if (player.Health == 0)
 			{
 				isDead = true;
+
 			}
 			/*for (auto& asteroidObj : asteroidVec)
 			{
 
-				asteroidObj.draw(window);
-				asteroidObj.movement(-5);
-				asteroidObj.update();
-				AsteroidBox = asteroidObj.boundingBox();
+			asteroidObj.draw(window);
+			asteroidObj.movement(-5);
+			asteroidObj.update();
+			AsteroidBox = asteroidObj.boundingBox();
 
 
-				if (AsteroidBox.intersects(bulletBox))
-				{
-					asteroidObj.dead = true;
-				}
+			if (AsteroidBox.intersects(bulletBox))
+			{
+			asteroidObj.dead = true;
+			}
 
 			}*/
 
@@ -314,13 +364,52 @@ int main()
 				window.draw(player);
 			}
 
+
+
+
+			if (isDead == true) {
+				window.draw(GameOverText);
+			}
 			window.draw(DHPT);
 			window.draw(HitpointScore);
 			window.draw(scoreText);
 
+			if (clock6.getElapsedTime().asSeconds() >= 2.5f && isDead == true)
+			{
+				window.draw(RespawnAvailable);
+
+			}
+
+			if (respawn == true)
+			{
+				isDead = false;
+				player.setPos(sf::Vector2f(200, 500));
+				player.setHealth(5);
+				score = 0;
+				respawn = false;
+				clock7.restart();
+			}
+
 			//	window.draw(rectangle);
 
+		}
+		if (isPlaying == false)
+		{
+			window.draw(MainMenuText2);
+			window.draw(MainMenuText1);
+			clock7.restart();
+		}
+
+
+		if (isDead == false)
+		{
+			clock6.restart();
+		}
+
+
 			window.display();
+
+
 		}
 	
 
@@ -329,17 +418,3 @@ int main()
 
 
 
-template <class ForwardIterator, class UnaryPredicate>
-ForwardIterator remove_if(ForwardIterator first, ForwardIterator last,
-	UnaryPredicate pred)
-{
-	ForwardIterator result = first;
-	while (first != last) {
-		if (!pred(*first)) {
-			*result = *first;
-			++result;
-		}
-		++first;
-	}
-	return result;
-}

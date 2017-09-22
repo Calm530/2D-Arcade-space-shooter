@@ -11,7 +11,7 @@ public:
 	Asteroid(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos);
 	~Asteroid();
 
-
+	
 
 	int getRight() {
 		return asteroid.getTexture()->getSize().x * (0.5f * asteroid.getScale().x);
@@ -113,6 +113,7 @@ void Asteroid::update()
 	{
 		dead = true;
 	}
+
 }
 
 void Asteroid::setPos(sf::Vector2f newPos)

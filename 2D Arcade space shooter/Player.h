@@ -13,10 +13,8 @@ public:
 
 	sf::Vector2f getPos() {
 		return player.getPosition();
-	}
-
-
-/*	int getSizeX() {
+	} 
+/*	int getSizeX() {ssssd dd dssasasd
 		return player.getScale().x;
 	}
 	int getSizeY() {
@@ -26,7 +24,7 @@ public:
 	void setPos(sf::Vector2f);
 
 	void Movement(sf::RenderWindow&, sf::Event);
-	float moveSpd = 6;
+	float moveSpd = 6.5;
 
 	int Health = 4;
 	

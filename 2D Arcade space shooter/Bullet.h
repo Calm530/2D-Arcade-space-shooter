@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Asteroid.h"
 
 class Bullet : public sf::Transformable
 {
@@ -8,6 +9,9 @@ public:
 	Bullet();
 	Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos);
 	~Bullet();
+
+	Asteroid asteroid;
+	void update();
 
 	void fire(int);
 
@@ -44,6 +48,8 @@ public:
 	{
 		window.draw(bullet);
 	}
+	
+	
 
 private:
 
@@ -79,6 +85,13 @@ Bullet::Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i source
 Bullet::~Bullet()
 {
 
+}
+void Bullet::update() {
+
+	if (bullet.getGlobalBounds().intersects(asteroid.boundingBox()))
+	{
+		dead = true;
+	}
 }
 
 void Bullet::fire(int speed)
