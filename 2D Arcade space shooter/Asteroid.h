@@ -53,6 +53,7 @@ public:
 	void draw(sf::RenderWindow& window)
 	{
 		window.draw(asteroid);
+		//window.draw(asteroidHitbox);
 	}
 
 	int rSourceY;
@@ -62,6 +63,12 @@ public:
 
 	sf::Sprite asteroid;
 	sf::Sprite getSprite() const;
+
+	sf::RectangleShape asteroidHitbox;
+
+	
+
+
 
 };
 
@@ -83,7 +90,10 @@ Asteroid::Asteroid(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i so
 	rSourceWidht = size.x;
 	rSourceHeight = size.y;
 
-	//bullet.setTextureRect(sf::IntRect(rSourceX, rSourceY, rSourceWidht, rSourceHeight));
+	asteroidHitbox.setFillColor(sf::Color::White);
+	asteroidHitbox.setSize(sf::Vector2f((asteroid.getGlobalBounds().width - 5), (asteroid.getGlobalBounds().height -5)));
+	asteroidHitbox.setOrigin(asteroidHitbox.getGlobalBounds().width / 2, asteroidHitbox.getGlobalBounds().height / 2);
+
 }
 Asteroid::~Asteroid()
 {
@@ -109,6 +119,8 @@ void Asteroid::setHP(float hp)
 
 void Asteroid::update()
 {
+	asteroidHitbox.setPosition(sf::Vector2f(asteroid.getPosition().x, asteroid.getPosition().y ));
+
 	if (hitpoints <= 0)
 	{
 		dead = true;

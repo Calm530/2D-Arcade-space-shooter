@@ -52,5 +52,8 @@
     <Image Include="Art\Images_06.png">
       <Filter>Source Files\Art</Filter>
     </Image>
+    <Image Include="Art\Images_01.png">
+      <Filter>Source Files\Art</Filter>
+    </Image>
   </ItemGroup>
 </Project>

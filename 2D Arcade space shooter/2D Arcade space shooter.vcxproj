@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Art\Images.png" />
+    <Image Include="Art\Images_01.png" />
     <Image Include="Art\Images_06.png" />
     <Image Include="Art\Images_07.png" />
   </ItemGroup>

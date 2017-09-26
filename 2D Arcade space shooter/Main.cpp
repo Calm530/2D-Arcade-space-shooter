@@ -50,20 +50,12 @@ int main()
 		
 	sf::Event event;
 	
-/*	sf::View gameView;
-	gameView.setSize(400, 600);
-	gameView.setCenter(0, 0);
-*/	
+
 
 	Player player(playertexture, sf::Vector2f(100, 400), sf::Vector2f(20, 26), sf::Vector2i(0, 0));
 	
 	std::vector<Bullet> bulletVec;
 	std::vector<Asteroid> asteroidVec;
-
-/*	sf::RectangleShape rectangle;
-	rectangle.setSize(sf::Vector2f(2, 2));
-	rectangle.setOutlineColor(sf::Color::Red);
-	rectangle.setOutlineThickness(5);	*/
 
 	if (player.Health <= 0)
 	{
@@ -91,6 +83,13 @@ int main()
 
 	player.setHealth(5);
 	player.setPos(sf::Vector2f(200,500));
+
+	sf::RectangleShape playerHitbox;
+	playerHitbox.setSize(sf::Vector2f(player.boundingBox().width - 20, player.boundingBox().height - 15));
+	playerHitbox.setOrigin(sf::Vector2f(playerHitbox.getGlobalBounds().width / 2, playerHitbox.getGlobalBounds().height / 2));
+	playerHitbox.setFillColor(sf::Color::White);
+
+
 
 	sf::Clock clock;
 	sf::Clock clock2;
@@ -123,12 +122,16 @@ int main()
 
 
 	
+	
 
 	while (window.isOpen())
 	{
 
 		while (window.pollEvent(event))
 		{
+
+			
+
 			// check the type of the event...
 			switch (event.type)
 			{
@@ -141,11 +144,14 @@ int main()
 			}
 		}
 
+		player.Movement(window, event);
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && isPlaying == false)
 		{
 			isPlaying = true;
 		}
 
+		playerHitbox.setPosition(sf::Vector2f(player.getPos().x + (player.boundingBox().width/2), player.getPos().y + (player.boundingBox().height / 2)));
 
 		window.clear();
 
@@ -212,6 +218,7 @@ int main()
 					int spawnRange = rand() % 380 + 20;
 					newAsteroid.setPos(sf::Vector2f(spawnRange, -20));
 					newAsteroid.setHP(3);
+					
 					asteroidVec.push_back(newAsteroid);
 				}
 
@@ -229,15 +236,8 @@ int main()
 					asteroidVec.push_back(newAsteroid);
 				}
 				
-
-
-
-
 				clock4.restart();
 			}
-
-
-
 			
 
 			sf::FloatRect bulletBox;
@@ -245,7 +245,7 @@ int main()
 			sf::FloatRect playerBox;
 
 
-			playerBox = player.boundingBox();
+			playerBox = playerHitbox.getGlobalBounds();
 
 
 
@@ -261,15 +261,11 @@ int main()
 				{
 					bulletObj.dead = true;
 				}
-				if (bulletObj.getPos().y >= 610)
+				if (bulletObj.getPos().y <= -10)
 				{
 					bulletObj.dead = true;
 				}
-
 			}
-
-
-
 
 			for (auto& asteroidObj : asteroidVec)
 			{
@@ -277,9 +273,10 @@ int main()
 				asteroidObj.draw(window);
 				asteroidObj.movement(-7);
 				asteroidObj.update();
-				AsteroidBox = asteroidObj.boundingBox();
+				
+				
 
-
+				AsteroidBox = asteroidObj.asteroidHitbox.getGlobalBounds();
 				if (AsteroidBox.intersects(bulletBox))
 				{
 					asteroidObj.dead = true;
@@ -331,37 +328,17 @@ int main()
 				isDead = true;
 
 			}
-			/*for (auto& asteroidObj : asteroidVec)
-			{
-
-			asteroidObj.draw(window);
-			asteroidObj.movement(-5);
-			asteroidObj.update();
-			AsteroidBox = asteroidObj.boundingBox();
-
-
-			if (AsteroidBox.intersects(bulletBox))
-			{
-			asteroidObj.dead = true;
-			}
-
-			}*/
-
 
 
 			asteroidVec.erase(std::remove_if(asteroidVec.begin(), asteroidVec.end(), IsMarkedToDelete), asteroidVec.end());
 			bulletVec.erase(std::remove_if(bulletVec.begin(), bulletVec.end(), IsMarkedToDelete2), bulletVec.end());
 
-			player.Movement(window, event);
-
-
-
-			//std::cout << bulletVec.size() << std::endl;
-			//std::cout << "X: " << player.getPos().x << "  Y: " << player.getPos().y << "\n";
-
+			
 
 			if (isDead == false) {
 				window.draw(player);
+				//window.draw(playerHitbox);
+				
 			}
 
 
@@ -373,7 +350,7 @@ int main()
 			window.draw(DHPT);
 			window.draw(HitpointScore);
 			window.draw(scoreText);
-
+			
 			if (clock6.getElapsedTime().asSeconds() >= 2.5f && isDead == true)
 			{
 				window.draw(RespawnAvailable);
@@ -415,6 +392,3 @@ int main()
 
 	return 0;
 }
-
-
-

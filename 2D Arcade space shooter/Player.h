@@ -152,17 +152,6 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	positionX = player.getPosition().x;
 	positionY = player.getPosition().y;
 
-/*
-	targetX = mousePos.x;
-	targetY = mousePos.y;
-	angleX = mousePos.x - (positionX + (player.getGlobalBounds().width) / (player.getScale().x));
-	angleY = mousePos.y - (positionY + (player.getGlobalBounds().height)/ (player.getScale().y *2));
-	distance = sqrt((angleX * angleX) + (angleY * angleY));
-	directionX = angleX / distance;
-	directionY = angleY / distance; wa wdswasdwasdwasdwawa  ds d d      d
-	velocityX = directionX * speed;
-	velocityY = directionY * speed;
-*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		player.move(0, -moveSpd);
@@ -180,12 +169,7 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 		player.move(moveSpd, 0);
 		
 	}
-	
-		//if(player.getPosition()!=window.mapPixelToCoords(sf::Mouse::getPosition(window)))
-		//player.move(velocityX, velocityY);
-	//player.move(std::cos(velocityX), std::sin(velocityY));
 
-	
 	
 	if (player.getPosition().x <= 0)
 	{
