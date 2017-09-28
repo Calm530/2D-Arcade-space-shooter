@@ -53,7 +53,7 @@ public:
 	void draw(sf::RenderWindow& window)
 	{
 		window.draw(asteroid);
-		//window.draw(asteroidHitbox);
+		window.draw(asteroidHitbox);
 	}
 
 	int rSourceY;

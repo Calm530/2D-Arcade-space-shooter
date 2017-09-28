@@ -82,10 +82,6 @@ Player::Player(sf::Texture& TEMP_Texture, sf::Vector2f posi, sf::Vector2f size, 
 {
 
 	player.setTexture(TEMP_Texture);
-	//player.setPosition(posi);
-
-	//player.setOrigin(sf::Vector2f(player.getTexture()->getSize().x * 0.5, player.getTexture()->getSize().y * 0.5));
-
 	player.setScale(2.7f, 2.7f);
 
 	
@@ -139,32 +135,23 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 
 	sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-	float targetX;
-	float targetY;
-	float angleX;
-	float angleY;
-	float distance;
-	float directionX;
-	float directionY;
-	float velocityX;
-	float velocityY;
 
 	positionX = player.getPosition().x;
 	positionY = player.getPosition().y;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		player.move(0, -moveSpd);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		player.move(0, moveSpd);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		player.move(-moveSpd, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		player.move(moveSpd, 0);
 		

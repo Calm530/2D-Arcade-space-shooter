@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "Asteroid.h"
 
+
+
 class Bullet : public sf::Transformable
 {
 public:
@@ -10,7 +12,7 @@ public:
 	Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos);
 	~Bullet();
 
-	Asteroid asteroid;
+	//Asteroid asteroid;
 	void update();
 
 	void fire(int);
@@ -49,7 +51,12 @@ public:
 		window.draw(bullet);
 	}
 	
-	
+	bool collision(Asteroid & a)
+	{
+		if ((bullet.getGlobalBounds().intersects(a.boundingBox()))) {
+			return dead;
+		}
+	}
 
 private:
 
@@ -70,17 +77,21 @@ Bullet::Bullet()
 Bullet::Bullet(sf::Texture& TEMP_Texture, sf::Vector2f size, sf::Vector2i sourcepos)
 {
 
+	
 
 	bullet.setTexture(TEMP_Texture);
-	//bullet.setOrigin(bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x), bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y));
+	
 	bullet.setScale(4.0f, 4.0f);
-
+	
 	rSourceY = sourcepos.y;
 	rSourceX = sourcepos.x;
 	rSourceWidht = size.x;
 	rSourceHeight = size.y;
 
 	//bullet.setTextureRect(sf::IntRect(rSourceX, rSourceY, rSourceWidht, rSourceHeight));
+
+	//bullet.setOrigin(bullet.getTexture()->getSize().x * (0.5f * bullet.getScale().x), bullet.getTexture()->getSize().y * (0.5f * bullet.getScale().y));
+	bullet.setOrigin(bullet.getGlobalBounds().width / 2, bullet.getGlobalBounds().height / 2);
 }
 Bullet::~Bullet()
 {
@@ -88,7 +99,9 @@ Bullet::~Bullet()
 }
 void Bullet::update() {
 
-	if (bullet.getGlobalBounds().intersects(asteroid.boundingBox()))
+	collision;
+
+	if (bullet.getGlobalBounds().intersects(boundingBox()))
 	{
 		dead = true;
 	}
