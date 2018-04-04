@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2D Arcade space shooter", "2D Arcade space shooter\2D Arcade space shooter.vcxproj", "{7350B417-86B9-4F40-A795-5DA67BDAFD7F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test2", "..\..\Documents\Projects\2D-Arcade-space-shooter\2D Arcade space shooter\Test2.vcxproj", "{1C799A9A-2DEF-4882-BA0E-A8A3F1F2E9A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7350B417-86B9-4F40-A795-5DA67BDAFD7F}.Debug|x86.Build.0 = Debug|Win32
 		{7350B417-86B9-4F40-A795-5DA67BDAFD7F}.Release|x86.ActiveCfg = Release|Win32
 		{7350B417-86B9-4F40-A795-5DA67BDAFD7F}.Release|x86.Build.0 = Release|Win32
+		{1C799A9A-2DEF-4882-BA0E-A8A3F1F2E9A0}.Debug|x86.ActiveCfg = Debug|Win32
+		{1C799A9A-2DEF-4882-BA0E-A8A3F1F2E9A0}.Debug|x86.Build.0 = Debug|Win32
+		{1C799A9A-2DEF-4882-BA0E-A8A3F1F2E9A0}.Release|x86.ActiveCfg = Release|Win32
+		{1C799A9A-2DEF-4882-BA0E-A8A3F1F2E9A0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

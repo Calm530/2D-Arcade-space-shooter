@@ -8,23 +8,17 @@ class Player : public sf::Drawable
 public:
 
 	Player();
-	Player(sf::Texture&, sf::Vector2f , sf::Vector2f , sf::Vector2i );
+	Player(sf::Texture&, sf::Vector2f , sf::Vector2i , sf::Vector2i );
 	~Player();
 
 	sf::Vector2f getPos() {
 		return player.getPosition();
 	} 
-/*	int getSizeX() {ssssd dd dssasasd
-		return player.getScale().x;
-	}
-	int getSizeY() {
-		return player.getScale().y;
-	}
-	*/
+
 	void setPos(sf::Vector2f);
 
 	void Movement(sf::RenderWindow&, sf::Event);
-	float moveSpd = 6.5;
+	float moveSpd = 8;
 
 	int Health = 4;
 	
@@ -45,21 +39,8 @@ public:
 		return player.getTexture()->getSize().x * (0.5f * player.getScale().x);
 	}
 
-
 private:
 
-
-	int rSourceY;
-	int rSourceX;
-	int rSourceWidht;
-	int rSourceHeight;
-	int rAddX;
-	int rAddY;
-
-	
-
-
-	
 
 	virtual void draw(sf::RenderTarget& window, sf::RenderStates state)const
 	{
@@ -78,21 +59,13 @@ Player::Player()
 {
 }
 
-Player::Player(sf::Texture& TEMP_Texture, sf::Vector2f posi, sf::Vector2f size, sf::Vector2i sourcepos)
+Player::Player(sf::Texture& TEMP_Texture, sf::Vector2f posi, sf::Vector2i size, sf::Vector2i sourcepos)
 {
 
 	player.setTexture(TEMP_Texture);
+	player.setTextureRect(sf::IntRect(sourcepos,size));
 	player.setScale(2.7f, 2.7f);
 
-	
-	
-
-	rSourceY = sourcepos.y;
-	rSourceX = sourcepos.x;
-	rSourceWidht = size.x;
-	rSourceHeight = size.y;
-
-	player.setTextureRect(sf::IntRect(rSourceX, rSourceY, rSourceWidht, rSourceHeight));
 	
 }
 
@@ -139,6 +112,10 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	positionX = player.getPosition().x;
 	positionY = player.getPosition().y;
 
+
+	
+
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		player.move(0, -moveSpd);
@@ -147,6 +124,7 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 	{
 		player.move(0, moveSpd);
 	}
+	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		player.move(-moveSpd, 0);
@@ -156,24 +134,29 @@ void Player::Movement(sf::RenderWindow& window, sf::Event event)
 		player.move(moveSpd, 0);
 		
 	}
-
+	
 	
 	if (player.getPosition().x <= 0)
 	{
 		player.setPosition(0, player.getPosition().y);
+	
 	}
 	if (player.getPosition().x + player.getGlobalBounds().width >= window.getSize().x)
 	{
-		player.setPosition(window.getSize().x - player.getGlobalBounds().width, player.getPosition().y);
+		player.setPosition(window.getSize().x - player.getGlobalBounds().width, player.getPosition().y);	
+		
 	}
 
 	if (player.getPosition().y <= 0)
 	{
+		
 		player.setPosition(player.getPosition().x, 0);
+		
 	}
 	if (player.getPosition().y + player.getGlobalBounds().height >= window.getSize().y)
 	{
 		player.setPosition(player.getPosition().x, window.getSize().y - player.getGlobalBounds().height);
+		
 	}
 
 }

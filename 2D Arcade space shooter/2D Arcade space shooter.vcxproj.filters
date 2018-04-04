@@ -18,10 +18,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="GUI\button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\button.cpp">
+    <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,30 +29,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Asteroid.h">
+    <ClInclude Include="Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Art\Images.png">
-      <Filter>Source Files\Art</Filter>
-    </Image>
-    <Image Include="Art\Images_07.png">
-      <Filter>Source Files\Art</Filter>
-    </Image>
-    <Image Include="Art\Images_06.png">
-      <Filter>Source Files\Art</Filter>
-    </Image>
-    <Image Include="Art\Images_01.png">
+    <Image Include="Art\Texturesheet.png">
       <Filter>Source Files\Art</Filter>
     </Image>
   </ItemGroup>
