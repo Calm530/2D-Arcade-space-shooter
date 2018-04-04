@@ -1,5 +1,6 @@
 //Main Includes
 #include <SFML/Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <vector>
 #include <iostream>
 #include <stdio.h>      /* printf, scanf, puts, NULL */
@@ -54,6 +55,22 @@
 		if (!font1.loadFromFile("Big Pixel Light demo.otf"))
 			EXIT_FAILURE;
 
+		//Game Sound(s)
+		// Load a music to play
+		sf::Music shoot;
+		if (!shoot.openFromFile("Sound/Laser_Shoot.wav"))
+			return EXIT_FAILURE;
+
+		sf::Music Explosion;
+		if (!Explosion.openFromFile("Sound/Explosion.wav"))
+			return EXIT_FAILURE;
+
+		sf::Music hurt;
+		if (!hurt.openFromFile("Sound/Hurt.wav"))
+			return EXIT_FAILURE;
+
+
+
 
 		//Create Window
 		sf::RenderWindow Window(sf::VideoMode(500, 800), "D3RP", sf::Style::Close);
@@ -85,6 +102,12 @@
 
 		MainMenuText1.setPosition(Window.getSize().x / 2, Window.getSize().y/2);
 		MainMenuText2.setPosition(Window.getSize().x / 2, Window.getSize().y / 2 + 50);
+
+		GameOverText.setOrigin(sf::Vector2f(GameOverText.getGlobalBounds().width / 2, GameOverText.getGlobalBounds().height / 2));
+		RespawnAvailable.setOrigin(sf::Vector2f(RespawnAvailable.getGlobalBounds().width / 2, RespawnAvailable.getGlobalBounds().height / 2));
+
+		GameOverText.setPosition(Window.getSize().x / 2, Window.getSize().y / 2);
+		RespawnAvailable.setPosition(Window.getSize().x / 2, Window.getSize().y / 2 + 50);
 		//Player
 
 		Player player(TextureSheet, sf::Vector2f(100, 400), sf::Vector2i(20, 26), sf::Vector2i(64, 0));
@@ -360,7 +383,7 @@
 			{
 				
 				AsteroidOBJ.dead = true;
-				
+				hurt.play();
 				if (pHit == false)
 				{
 					Hitpoints = Hitpoints - 1;
@@ -374,7 +397,7 @@
 			{
 				if (AsteroidOBJ.asteroidHitbox.getGlobalBounds().intersects(BulletOBJ.bulletHitbox.getGlobalBounds()))
 				{
-					
+					Explosion.play();
 					AsteroidOBJ.dead = true;
 					BulletOBJ.dead = true;
 					score = score + 100;
@@ -400,6 +423,7 @@
 		//Flash "Animation"
 		if (pHit == true)
 		{
+			IsFiring = false;
 			if (ResetClock1.getElapsedTime().asSeconds() >= 0.01f && pFlash == false)
 			{
 				pFlash = true;
@@ -410,6 +434,10 @@
 				pFlash = false;
 				
 			}
+		}
+		else
+		{
+			IsFiring = true;
 		}
 
 		if (DelayClock5.getElapsedTime().asSeconds() >= 0.7f && pHit == true)
@@ -439,6 +467,7 @@
 					//check if player is dead before firing.
 					if (IsDead == false) {
 						newBullet.setPos(sf::Vector2f(player.player.getPosition().x + (player.boundingBox().width / 2), player.getPos().y));
+						shoot.play();
 						bulletVec.push_back(newBullet);
 						BulletSpawnClock.restart();
 					}

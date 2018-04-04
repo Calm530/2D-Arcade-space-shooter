@@ -81,6 +81,11 @@
   <ItemGroup>
     <Image Include="Art\Texturesheet.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\Explosion.wav" />
+    <Media Include="Sound\Hurt.wav" />
+    <Media Include="Sound\Laser_Shoot.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets" Condition="Exists('..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets')" />

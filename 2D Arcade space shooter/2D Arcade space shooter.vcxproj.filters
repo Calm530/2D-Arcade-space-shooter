@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Art">
       <UniqueIdentifier>{6408ba2d-b3ef-422f-878a-ef034b50c3dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{e07d5ada-3eb4-45e6-a4b5-2827ceba91ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI\button.cpp">
@@ -43,5 +46,16 @@
     <Image Include="Art\Texturesheet.png">
       <Filter>Source Files\Art</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\Explosion.wav">
+      <Filter>Source Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Hurt.wav">
+      <Filter>Source Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Laser_Shoot.wav">
+      <Filter>Source Files\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>
